@@ -1,0 +1,1 @@
+/* Сторонние библиотеки (лицензия MIT): docx © Dolan Miu; PptxGenJS © Brent Ely; JSZip © Stuart Knightley и др. Текст лицензии MIT: Permission is hereby granted, free of charge, to any person obtaining a copy of this software... (полный текст — https://opensource.org/license/mit) */
