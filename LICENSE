@@ -1,0 +1,32 @@
+TRIZ-NF — Source-Available Licence
+
+Copyright (c) 2026 Oksana N. Shevchenko. All rights reserved.
+Registered computer program, Rospatent no. 2026692814 (25 October 2026).
+
+Permission is granted, free of charge, to any person obtaining a copy of this
+software and its source code to:
+
+  1. read, study and review the source code;
+  2. run the software and modify it for personal, educational and
+     non-commercial research purposes;
+  3. cite the software and quote reasonable excerpts of the source code in
+     publications, with attribution to the author.
+
+The following require a separate written licence from the author:
+
+  - any commercial use, including use in consulting, field development
+    design or reserve evaluation performed for payment;
+  - redistribution of the software or of modified versions, in source or
+    binary form, other than as a fork on a public code-hosting service that
+    preserves this licence and attribution.
+
+Third-party components in the vendor/ directory (docx, PptxGenJS, JSZip and
+their dependencies) are distributed under their own MIT licences, reproduced
+in vendor/LICENSES-THIRD-PARTY.js.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE
+USE OF THE SOFTWARE. Forecasts produced by the software are engineering
+estimates and are not a substitute for reserve audits or regulatory filings.

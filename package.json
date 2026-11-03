@@ -1,0 +1,14 @@
+{
+  "name": "triz-nf",
+  "version": "1.2.0",
+  "description": "Oil production forecasting and economics for hard-to-recover reserves under a non-linear filtration law",
+  "author": "Oksana N. Shevchenko",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "main": "src/core.js",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "figure": "node scripts/validation_figure.js && python3 scripts/validation_figure.py"
+  },
+  "engines": { "node": ">=18" }
+}

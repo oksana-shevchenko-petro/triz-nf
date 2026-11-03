@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ТРИЗ-НФ — прогноз добычи</title>
+<meta name="author" content="Шевченко Оксана Николаевна">
+<meta name="copyright" content="© Шевченко О.Н. Все права защищены.">
+<style>:root {
+  --navy: #14213d; --navy-2: #1f3160; --accent: #eb6834; --blue: #2a78d6; --green: #1baf7a;
+  --bg: #f4f3ef; --card: #ffffff; --line: #e1e0da; --text: #1d1d1b; --muted: #5f5e5a; --soft: #f9f8f5;
+  --warn-bg: #fff5e6; --warn: #8a4b00; --ok: #11795a; --bad: #b3261e;
+  --radius: 10px; --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif; --mono: Consolas, "Courier New", monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 14px/1.45 var(--font); }
+button, input, select, textarea { font: inherit; color: inherit; }
+header.top { background: var(--navy); color: #fff; display: flex; align-items: center; gap: 18px; padding: 10px 20px; position: sticky; top: 0; z-index: 20; }
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand b { font-size: 19px; letter-spacing: .3px; }
+.brand span { color: #c7d2ee; font-size: 12px; }
+.projname { flex: 1; min-width: 0; color: #e8ecf7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top .btn { background: transparent; color: #fff; border: 1px solid #ffffff44; }
+.top .btn:hover { background: #ffffff14; }
+.layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 54px); }
+nav.side { background: #fff; border-right: 1px solid var(--line); padding: 14px 10px; position: sticky; top: 54px; height: calc(100vh - 54px); overflow: auto; }
+nav.side a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; color: var(--text); text-decoration: none; cursor: pointer; margin-bottom: 2px; }
+nav.side a .n { width: 22px; height: 22px; border-radius: 50%; background: var(--soft); border: 1px solid var(--line); display: inline-grid; place-items: center; font-size: 12px; color: var(--muted); flex: none; }
+nav.side a.active { background: #eef3fc; color: var(--navy); font-weight: 600; }
+nav.side a.active .n { background: var(--navy); color: #fff; border-color: var(--navy); }
+nav.side .sep { height: 1px; background: var(--line); margin: 10px 6px; }
+nav.side .foot { font-size: 11px; color: var(--muted); padding: 10px 12px; }
+main { padding: 18px 24px 60px; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; }
+.kpi .l { font-size: 12px; color: var(--muted); }
+.kpi .v { display: flex; gap: 14px; align-items: baseline; margin-top: 2px; }
+.kpi .v b { font-size: 20px; font-variant-numeric: tabular-nums; }
+.kpi .v .a { color: var(--blue); } .kpi .v .p { color: var(--accent); }
+.kpi .v small { color: var(--muted); font-size: 11px; }
+h1 { font-size: 22px; margin: 4px 0 4px; color: var(--navy); }
+h2 { font-size: 16px; margin: 0 0 10px; color: var(--navy); }
+h3 { font-size: 14px; margin: 14px 0 8px; }
+p.lead { color: var(--muted); margin: 0 0 16px; max-width: 980px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 16px; }
+.field { display: flex; flex-direction: column; gap: 3px; }
+.field label { font-size: 12px; color: var(--muted); }
+.field label .u { color: #8b8a84; }
+.field input[type=text], .field select, .field textarea { border: 1px solid #cfcec7; border-radius: 7px; padding: 6px 9px; background: #fff; min-width: 0; }
+.field input[type=text]:focus, .field select:focus, textarea:focus { outline: 2px solid #2a78d655; border-color: var(--blue); }
+.field.chk { flex-direction: row; align-items: center; gap: 8px; padding-top: 18px; }
+.field.chk label { color: var(--text); font-size: 13px; }
+.field .hint { font-size: 11px; color: #8b8a84; }
+.field.calc input { background: var(--soft); color: var(--muted); }
+.btn { border: 1px solid #cfcec7; background: #fff; border-radius: 8px; padding: 7px 14px; cursor: pointer; white-space: nowrap; }
+.btn:hover { background: var(--soft); }
+.btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+.btn.primary:hover { background: var(--navy-2); }
+.btn.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.small { padding: 4px 9px; font-size: 12px; }
+.btn.danger { color: var(--bad); }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.spacer { flex: 1; }
+table.t { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+table.t th, table.t td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: right; white-space: nowrap; }
+table.t th { background: var(--soft); font-weight: 600; font-size: 12px; color: var(--muted); position: sticky; top: 0; }
+table.t td:first-child, table.t th:first-child { text-align: left; }
+table.t td.l, table.t th.l { text-align: left; white-space: normal; }
+table.t input { width: 86px; border: 1px solid #cfcec7; border-radius: 5px; padding: 3px 6px; text-align: right; }
+.scroll { overflow: auto; max-height: 520px; border: 1px solid var(--line); border-radius: 8px; }
+.groups { display: grid; grid-template-columns: 260px 1fr; gap: 14px; align-items: start; }
+.glist .g { border: 1px solid var(--line); background: #fff; border-radius: 9px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer; }
+.glist .g.sel { border-color: var(--navy); box-shadow: 0 0 0 2px #14213d22; }
+.glist .g b { display: block; }
+.glist .g small { color: var(--muted); }
+.glist .g .q { float: right; font-weight: 600; color: var(--blue); }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 99px; background: #eef3fc; color: var(--navy); margin-left: 6px; }
+.badge.ext { background: #fff1e8; color: #9a3b0e; }
+.warn { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+.ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; font-size: 13px; }
+.kv div:nth-child(odd) { color: var(--muted); }
+.kv div:nth-child(even) { text-align: right; font-variant-numeric: tabular-nums; }
+.chart { width: 100%; overflow: hidden; }
+.chart svg { width: 100%; height: auto; display: block; }
+.seg { display: inline-flex; border: 1px solid #cfcec7; border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: #fff; padding: 6px 12px; cursor: pointer; }
+.seg button.on { background: var(--navy); color: #fff; }
+.formula { font-family: Cambria, "Times New Roman", serif; font-size: 15px; background: var(--soft); border-left: 3px solid var(--blue); padding: 6px 12px; margin: 6px 0; border-radius: 0 6px 6px 0; }
+.note { font-size: 12px; color: var(--muted); }
+details.sec { border: 1px solid var(--line); border-radius: 9px; padding: 8px 12px; margin-bottom: 10px; background: #fff; }
+details.sec > summary { cursor: pointer; font-weight: 600; color: var(--navy); }
+details.sec[open] > summary { margin-bottom: 10px; }
+.toast { position: fixed; right: 20px; bottom: 20px; background: var(--navy); color: #fff; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: opacity .3s; z-index: 50; pointer-events: none; max-width: 420px; }
+.toast.on { opacity: 1; }
+textarea.pts { width: 100%; min-height: 160px; font-family: var(--mono); font-size: 12px; border: 1px solid #cfcec7; border-radius: 7px; padding: 8px; }
+.sched { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 6px; }
+.sched .field input { text-align: right; }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  nav.side { position: static; height: auto; display: flex; flex-wrap: wrap; gap: 4px; }
+  nav.side .sep, nav.side .foot { display: none; }
+  .groups { grid-template-columns: 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+  main { padding: 14px 16px 40px; }
+}
+@media print { header.top, nav.side { display: none; } .layout { display: block; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>ТРИЗ-НФ</b><span>прогноз добычи · нелинейная фильтрация</span></div>
+  <div class="projname" id="projname"></div>
+  <button class="btn" id="btnNew">Новый</button>
+  <button class="btn" id="btnOpen" title="Проект .json, шаблон исходных данных или итоговый файл .xlsx">Открыть / загрузить данные</button>
+  <button class="btn" id="btnSave">Сохранить</button>
+  <button class="btn" id="btnDemo">Пример</button>
+  <button class="btn accent" id="btnFinal" title="Исходные данные и все результаты в одной книге Excel">Итоговый файл</button>
+  <input type="file" id="fileIn" accept=".json,.xlsx,.xlsm,application/json" hidden>
+</header>
+<div class="layout">
+  <nav class="side" id="nav"></nav>
+  <main id="main"></main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="vendor/LICENSES-THIRD-PARTY.js"></script>
+<script src="vendor/docx.js"></script>
+<script src="vendor/pptxgen.js"></script>
+<script src="src/core.js"></script>
+<script src="src/econ.js"></script>
+<script src="src/demo.js"></script>
+<script src="src/data.js"></script>
+<script src="src/charts.js"></script>
+<script src="src/xlsx.js"></script>
+<script src="src/dataio.js"></script>
+<script src="src/reports.js"></script>
+<script src="src/ui.js"></script>
+</body>
+</html>
