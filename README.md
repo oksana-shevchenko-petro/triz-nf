@@ -18,7 +18,7 @@ Registered with the Russian Federal Service for Intellectual Property
 (Rospatent) as computer program no. 2026692814, 25 October 2026.
 Author and rights holder: Oksana N. Shevchenko.
 The production-forecast method implemented in `src/core.js` (method A and the
-decline model) is the subject of a Russian invention patent application filed
+decline model) is the subject of a Russian invention patent application no. 2026133768, filed
 on 3 November 2026 (patent pending).
 
 ![Validation against published field data](docs/validation.png)
